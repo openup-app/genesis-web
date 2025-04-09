@@ -15,12 +15,29 @@ function load(serialized) {
   Blockly.serialization.workspaces.load(deserialized, workspace);
 }
 
+function createVariable(name, id) {
+  let workspace = Blockly.getMainWorkspace();
+  if (!id) {
+    workspace.createVariable(name);
+  } else {
+    workspace.createVariable(name, null, id);
+  }
+}
+
+function deleteVariable(id) {
+  let workspace = Blockly.getMainWorkspace();
+  workspace.deleteVariableById(id);
+}
+
 function emitCode() {
+  // Disable variable declaration generation
   let code = javascript.javascriptGenerator.workspaceToCode(
     Blockly.getMainWorkspace()
   );
+  // TODO: Exclude "state" variable declarations via the generator (keep temp variable declarations)
+  const cleanedCode = code.replace(/^var\s+[\w\s,]+;\s*$/gm, "");
   if (window.parent !== window) {
-    window.parent.postMessage({ type: "code", code: code }, "*");
+    window.parent.postMessage({ type: "code", code: cleanedCode }, "*");
   }
 }
 
@@ -118,8 +135,7 @@ function setupBlockly() {
     contents: [
       {
         kind: "category",
-        name: "Engine Blocks",
-        colour: "#a55bff",
+        name: "Object",
         contents: [
           {
             kind: "block",
@@ -175,6 +191,11 @@ function setupBlockly() {
       },
       {
         kind: "category",
+        name: "Variables",
+        custom: "VARIABLE",
+      },
+      {
+        kind: "category",
         name: "Logic",
         contents: [
           { kind: "block", type: "controls_if" },
@@ -184,17 +205,6 @@ function setupBlockly() {
           { kind: "block", type: "logic_boolean" },
           { kind: "block", type: "logic_null" },
           { kind: "block", type: "logic_ternary" },
-        ],
-      },
-      {
-        kind: "category",
-        name: "Loops",
-        contents: [
-          { kind: "block", type: "controls_repeat_ext" },
-          { kind: "block", type: "controls_whileUntil" },
-          { kind: "block", type: "controls_for" },
-          { kind: "block", type: "controls_forEach" },
-          { kind: "block", type: "controls_flow_statements" },
         ],
       },
       {
@@ -217,57 +227,22 @@ function setupBlockly() {
       },
       {
         kind: "category",
-        name: "Text",
+        name: "Loops",
+        contents: [
+          { kind: "block", type: "controls_repeat_ext" },
+          { kind: "block", type: "controls_whileUntil" },
+          { kind: "block", type: "controls_for" },
+          { kind: "block", type: "controls_flow_statements" },
+        ],
+      },
+      {
+        kind: "category",
+        name: "(debug)",
         contents: [
           { kind: "block", type: "text" },
           { kind: "block", type: "text_join" },
-          { kind: "block", type: "text_append" },
-          { kind: "block", type: "text_length" },
-          { kind: "block", type: "text_isEmpty" },
-          { kind: "block", type: "text_indexOf" },
-          { kind: "block", type: "text_charAt" },
-          { kind: "block", type: "text_getSubstring" },
-          { kind: "block", type: "text_changeCase" },
-          { kind: "block", type: "text_trim" },
           { kind: "block", type: "text_print" },
-          { kind: "block", type: "text_prompt_ext" },
         ],
-      },
-      {
-        kind: "category",
-        name: "Lists",
-        contents: [
-          { kind: "block", type: "lists_create_with" },
-          { kind: "block", type: "lists_repeat" },
-          { kind: "block", type: "lists_length" },
-          { kind: "block", type: "lists_isEmpty" },
-          { kind: "block", type: "lists_indexOf" },
-          { kind: "block", type: "lists_getIndex" },
-          { kind: "block", type: "lists_setIndex" },
-          { kind: "block", type: "lists_getSublist" },
-          { kind: "block", type: "lists_split" },
-          { kind: "block", type: "lists_sort" },
-        ],
-      },
-      {
-        kind: "category",
-        name: "Colour",
-        contents: [
-          { kind: "block", type: "colour_picker" },
-          { kind: "block", type: "colour_random" },
-          { kind: "block", type: "colour_rgb" },
-          { kind: "block", type: "colour_blend" },
-        ],
-      },
-      {
-        kind: "category",
-        name: "Variables",
-        custom: "VARIABLE",
-      },
-      {
-        kind: "category",
-        name: "Functions",
-        custom: "PROCEDURE",
       },
     ],
   };
