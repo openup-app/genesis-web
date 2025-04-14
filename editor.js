@@ -96,6 +96,48 @@ function setupBlockly() {
       tooltip: "Set the speed in pixels per second in degrees",
       helpUrl: "",
     },
+    {
+      type: "apply_impulse",
+      message0: "push by %1 instantly at %2 degrees",
+      args0: [
+        {
+          type: "input_value",
+          name: "AMOUNT",
+          check: "Number",
+        },
+        {
+          type: "input_value",
+          name: "DEGREES",
+          check: "Number",
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 230,
+      tooltip: "Apply an instant force",
+      helpUrl: "",
+    },
+    {
+      type: "apply_force",
+      message0: "push by %1 at %2 degrees",
+      args0: [
+        {
+          type: "input_value",
+          name: "AMOUNT",
+          check: "Number",
+        },
+        {
+          type: "input_value",
+          name: "DEGREES",
+          check: "Number",
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 230,
+      tooltip: "Apply a force",
+      helpUrl: "",
+    },
   ]);
   javascript.javascriptGenerator.forBlock["set_position"] = function (block) {
     var x = Blockly.JavaScript.valueToCode(
@@ -127,6 +169,34 @@ function setupBlockly() {
       Blockly.JavaScript.ORDER_ATOMIC
     );
     var code = `setSpeed(${speed});\n`;
+    return code;
+  };
+  javascript.javascriptGenerator.forBlock["apply_impulse"] = function (block) {
+    var amount = Blockly.JavaScript.valueToCode(
+      block,
+      "AMOUNT",
+      Blockly.JavaScript.ORDER_ATOMIC
+    );
+    var degrees = Blockly.JavaScript.valueToCode(
+      block,
+      "DEGREES",
+      Blockly.JavaScript.ORDER_ATOMIC
+    );
+    var code = `applyImpulse(${amount}, ${degrees});\n`;
+    return code;
+  };
+  javascript.javascriptGenerator.forBlock["apply_force"] = function (block) {
+    var amount = Blockly.JavaScript.valueToCode(
+      block,
+      "AMOUNT",
+      Blockly.JavaScript.ORDER_ATOMIC
+    );
+    var degrees = Blockly.JavaScript.valueToCode(
+      block,
+      "DEGREES",
+      Blockly.JavaScript.ORDER_ATOMIC
+    );
+    var code = `applyForce(${amount}, ${degrees});\n`;
     return code;
   };
 
@@ -182,6 +252,50 @@ function setupBlockly() {
                   type: "math_number",
                   fields: {
                     NUM: 200,
+                  },
+                },
+              },
+            },
+          },
+          {
+            kind: "block",
+            type: "apply_impulse",
+            inputs: {
+              AMOUNT: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 5,
+                  },
+                },
+              },
+              DEGREES: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 90,
+                  },
+                },
+              },
+            },
+          },
+          {
+            kind: "block",
+            type: "apply_force",
+            inputs: {
+              AMOUNT: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 50,
+                  },
+                },
+              },
+              DEGREES: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 90,
                   },
                 },
               },

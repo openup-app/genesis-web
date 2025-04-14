@@ -27,6 +27,8 @@ function evaluate(code, state) {
     registerFunction(interpreter, globalObject, "setPosition");
     registerFunction(interpreter, globalObject, "setDirection");
     registerFunction(interpreter, globalObject, "setSpeed");
+    registerFunction(interpreter, globalObject, "applyImpulse");
+    registerFunction(interpreter, globalObject, "applyForce");
 
     for (const [name, value] of Object.entries(stateObject)) {
       interpreter.setProperty(
