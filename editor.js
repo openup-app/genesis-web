@@ -209,6 +209,50 @@ function setupBlockly() {
         contents: [
           {
             kind: "block",
+            type: "apply_impulse",
+            inputs: {
+              AMOUNT: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 5,
+                  },
+                },
+              },
+              DEGREES: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 90,
+                  },
+                },
+              },
+            },
+          },
+          {
+            kind: "block",
+            type: "apply_force",
+            inputs: {
+              AMOUNT: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 40,
+                  },
+                },
+              },
+              DEGREES: {
+                shadow: {
+                  type: "math_number",
+                  fields: {
+                    NUM: 0,
+                  },
+                },
+              },
+            },
+          },
+          {
+            kind: "block",
             type: "set_position",
             inputs: {
               X: {
@@ -252,50 +296,6 @@ function setupBlockly() {
                   type: "math_number",
                   fields: {
                     NUM: 200,
-                  },
-                },
-              },
-            },
-          },
-          {
-            kind: "block",
-            type: "apply_impulse",
-            inputs: {
-              AMOUNT: {
-                shadow: {
-                  type: "math_number",
-                  fields: {
-                    NUM: 5,
-                  },
-                },
-              },
-              DEGREES: {
-                shadow: {
-                  type: "math_number",
-                  fields: {
-                    NUM: 90,
-                  },
-                },
-              },
-            },
-          },
-          {
-            kind: "block",
-            type: "apply_force",
-            inputs: {
-              AMOUNT: {
-                shadow: {
-                  type: "math_number",
-                  fields: {
-                    NUM: 50,
-                  },
-                },
-              },
-              DEGREES: {
-                shadow: {
-                  type: "math_number",
-                  fields: {
-                    NUM: 90,
                   },
                 },
               },
