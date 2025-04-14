@@ -98,7 +98,7 @@ function setupBlockly() {
     },
     {
       type: "apply_impulse",
-      message0: "push by %1 instantly at %2 degrees",
+      message0: "launch by %1 at %2 degrees",
       args0: [
         {
           type: "input_value",
