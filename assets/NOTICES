@@ -5857,10 +5857,6 @@ image_picker_macos
 image_picker_platform_interface
 image_picker_windows
 plugin_platform_interface
-pointer_interceptor
-pointer_interceptor_ios
-pointer_interceptor_platform_interface
-pointer_interceptor_web
 
 Copyright 2013 The Flutter Authors. All rights reserved.
 
